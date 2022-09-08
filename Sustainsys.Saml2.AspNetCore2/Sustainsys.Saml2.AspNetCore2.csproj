@@ -10,6 +10,7 @@
     <Copyright>Copyright © Sustainsys and contributors 2017-2020</Copyright>
     <PackageTags>SAML2 authentication AspNet SAML SSO</PackageTags>
     <PackageDescription>ASP.NET Core authentication handler for the SAML2 protocol, compatible with Asp.Net Core 2.X and 3.X</PackageDescription>
+    <RepositoryUrl>https://github.com/myblueprint-spaces/Saml2</RepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup>
