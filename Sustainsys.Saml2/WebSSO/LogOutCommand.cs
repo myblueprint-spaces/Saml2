@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Sustainsys.Saml2.Configuration;
 using System.Security.Claims;
 using System.Net;
@@ -120,7 +121,7 @@ namespace Sustainsys.Saml2.WebSso
                 {
                     throw new InvalidSignatureException("There is no Issuer element in the message, so there is no way to know what certificate to use to validate the signature.");
                 }
-                var idp = options.IdentityProviders[new EntityId(issuer)];
+                var idp = options.Notifications.GetIdentityProvider(new EntityId(issuer), new Dictionary<string, string>(), options);
 
                 if (!unbindResult.Data.IsSignedByAny(
                     idp.SigningKeys,
@@ -169,7 +170,9 @@ namespace Sustainsys.Saml2.WebSso
                 sessionIndexClaim = request.User.FindFirst(Saml2ClaimTypes.SessionIndex);
             }
 
-            var knownIdp = options.IdentityProviders.TryGetValue(new EntityId(idpEntityId), out IdentityProvider idp);
+            var idp = options.Notifications.GetIdentityProvider(new EntityId(idpEntityId), new Dictionary<string, string>(),
+                options);
+            var knownIdp = idp != null;
 
             options.SPOptions.Logger.WriteVerbose("Initiating logout, checking requirements for federated logout"
                 + "\n  Issuer of LogoutNameIdentifier claim (should be Idp entity id): " + idpEntityId
@@ -249,7 +252,7 @@ namespace Sustainsys.Saml2.WebSso
         {
             var request = Saml2LogoutRequest.FromXml(unbindResult.Data);
 
-            var idp = options.IdentityProviders[request.Issuer];
+            var idp = options.Notifications.GetIdentityProvider(request.Issuer, new Dictionary<string, string>(), options); 
 
             if(options.SPOptions.SigningServiceCertificate == null)
             {
