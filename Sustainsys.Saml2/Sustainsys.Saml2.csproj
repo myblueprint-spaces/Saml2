@@ -9,6 +9,7 @@
     <PackageTags>SAML2 authentication AspNet SAML SSO</PackageTags>
     <PackageDescription>SAML2 protocol support. Do not use directly, use the high level package for your platform.</PackageDescription>
     <TargetFrameworkProfile />
+    <RepositoryUrl>https://github.com/myblueprint-spaces/Saml2</RepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
