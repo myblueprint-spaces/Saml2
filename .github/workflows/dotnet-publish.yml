@@ -22,11 +22,11 @@ jobs:
         dotnet-version: 6.0.x
         source-url: https://nuget.pkg.github.com/myblueprint-spaces/index.json
     - name: Restore dependencies
-      run: cd Sustainsys.Saml2 && dotnet restore
+      run: cd Sustainsys.Saml2.AspNetCore2 && dotnet restore
     - name: Build
-      run: cd Sustainsys.Saml2 && dotnet build -c Release --no-restore /p:Version=${{ github.event.release.tag_name }}
+      run: cd Sustainsys.Saml2.AspNetCore2 && dotnet build -c Release --no-restore /p:Version=${{ github.event.release.tag_name }}
     - name: Pack
-      run: cd Sustainsys.Saml2 && dotnet pack -c Release /p:Version=${{ github.event.release.tag_name }}
+      run: cd Sustainsys.Saml2.AspNetCore2 && dotnet pack -c Release /p:Version=${{ github.event.release.tag_name }}
     - name: Push
       run: |
-        cd Sustainsys.Saml2 && dotnet nuget push bin/Release/Sustainsys.Saml2.${{ github.event.release.tag_name }}.nupkg -k $NUGET_AUTH_TOKEN
+        cd Sustainsys.Saml2.AspNetCore2 && dotnet nuget push bin/Release/netstandard2.0/Sustainsys.Saml2.AspNetCore2.${{ github.event.release.tag_name }}.nupkg -k $NUGET_AUTH_TOKEN
