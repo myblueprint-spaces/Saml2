@@ -21,6 +21,11 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
+import os
+
+# Set canonical URL from the Read the Docs Domain
+html_baseurl = os.environ.get("READTHEDOCS_CANONICAL_URL", "")
+
 
 # -- General configuration ------------------------------------------------
 
@@ -47,7 +52,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Sustainsys.Saml2'
-copyright = '2018, Sustainsys and Contributors'
+copyright = '2024, Sustainsys and Contributors'
 author = 'Anders Abel'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -64,7 +69,7 @@ release = ''
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+language = 'en'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -86,7 +91,7 @@ todo_include_todos = False
 html_theme = 'sphinx_rtd_theme'
 
 def setup(app):
-    app.add_stylesheet('custom.css')
+    app.add_css_file('custom.css')
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the

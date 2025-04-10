@@ -20,7 +20,6 @@ namespace Sustainsys.Saml2
         public ManagedRSASignatureDescription()
         {
             KeyAlgorithm = typeof(RSACryptoServiceProvider).FullName;
-            DigestAlgorithm = typeof(SHA256Managed).FullName;
         }
 
         /// <summary>
@@ -54,9 +53,7 @@ namespace Sustainsys.Saml2
                 throw new ArgumentNullException(nameof(key));
             }
 
-            var provider = EnvironmentHelpers.IsNetCore ? key :
-				((RSACryptoServiceProvider)key)
-					.GetSha256EnabledRSACryptoServiceProvider();
+            var provider = ((RSA)key).GetSha256EnabledRSACryptoServiceProvider();
 
             var formatter = new RSAPKCS1SignatureFormatter(provider);
 			formatter.SetHashAlgorithm(HashAlgorithm);
@@ -66,16 +63,30 @@ namespace Sustainsys.Saml2
 
 	public class ManagedRSASHA256SignatureDescription : ManagedRSASignatureDescription
 	{
+        public ManagedRSASHA256SignatureDescription()
+        {
+            DigestAlgorithm = typeof(SHA256Managed).FullName;
+        }
+
 		public override string HashAlgorithm => "sha256";
 	}
 
 	public class ManagedRSASHA384SignatureDescription : ManagedRSASignatureDescription
 	{
+        public ManagedRSASHA384SignatureDescription()
+        {
+            DigestAlgorithm = typeof(SHA384Managed).FullName;
+        }
+
 		public override string HashAlgorithm => "sha384";
 	}
 
 	public class ManagedRSASHA512SignatureDescription : ManagedRSASignatureDescription
 	{
+        public ManagedRSASHA512SignatureDescription()
+        {
+            DigestAlgorithm = typeof(SHA512Managed).FullName;
+        }
 		public override string HashAlgorithm => "sha512";
 	}
 }

@@ -27,6 +27,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using AspNetCore2.Tests;
 
 namespace Sustainsys.Saml2.AspNetCore2.Tests
 {
@@ -233,6 +234,7 @@ namespace Sustainsys.Saml2.AspNetCore2.Tests
         public async Task Saml2Handler_Acs_Works()
         {
             var context = new Saml2HandlerTestContext();
+            context.HttpContext.Response.Cookies.Returns(new StubResponseCookies());
 
             context.HttpContext.Request.Method = "POST";
             context.HttpContext.Request.Path = "/Saml2/Acs";
@@ -257,7 +259,7 @@ namespace Sustainsys.Saml2.AspNetCore2.Tests
 
             var cookieName = $"{StoredRequestState.CookieNameBase}{relayState}";
 
-            context.HttpContext.Request.Cookies = new StubCookieCollection(
+            context.HttpContext.Request.Cookies = new StubRequestCookieCollection(
                 Enumerable.Repeat(new KeyValuePair<string, string>(
                     cookieName, cookieData), 1));
 
@@ -453,13 +455,14 @@ namespace Sustainsys.Saml2.AspNetCore2.Tests
         }
 
         [TestMethod]
-        public void Saml2Handler_SignOutAsync_NullcheckProperties()
+        public async Task Saml2Handler_SignOutAsync_AllowNullProperties()
         {
             var context = new Saml2HandlerTestContext();
             
-            Func<Task> f = async () => await context.Subject.SignOutAsync(null);
+            await context.Subject.SignOutAsync(null);
 
-            f.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("properties");
+            context.HttpContext.Response.Headers["Location"].Single().Should().Be("/",
+                "if federated logout is not enabled, there should be a redirect to path base for null auth props");
         }
 
         [TestMethod]
