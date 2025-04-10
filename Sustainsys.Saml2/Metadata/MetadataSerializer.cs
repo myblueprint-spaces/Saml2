@@ -3353,7 +3353,8 @@ namespace Sustainsys.Saml2.Metadata
 
 		protected virtual EndpointReference ReadWrappedEndpointReference(XmlReader reader)
 		{
-			(string wrapperName, string wrapperNs) = (reader.Name, reader.NamespaceURI);
+			var wrapperName = reader.Name;
+			var wrapperNs = reader.NamespaceURI;
 			while (reader.Read() && reader.NodeType != XmlNodeType.Element)
 			{
 				if (reader.NodeType == XmlNodeType.EndElement)
