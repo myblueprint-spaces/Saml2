@@ -19,7 +19,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 8.0.x
         source-url: https://nuget.pkg.github.com/myblueprint-spaces/index.json
     - name: Restore dependencies
       run: cd Sustainsys.Saml2.AspNetCore2 && dotnet restore
