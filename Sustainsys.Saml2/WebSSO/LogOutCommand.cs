@@ -170,8 +170,7 @@ namespace Sustainsys.Saml2.WebSso
                 sessionIndexClaim = request.User.FindFirst(Saml2ClaimTypes.SessionIndex);
             }
 
-            var idp = options.Notifications.GetIdentityProvider(new EntityId(idpEntityId), new Dictionary<string, string>(),
-                options);
+            var idp = idpEntityId == null ? null : options.TryGetIdentityProvider(new EntityId(idpEntityId));
             var knownIdp = idp != null;
 
             options.SPOptions.Logger.WriteVerbose("Initiating logout, checking requirements for federated logout"

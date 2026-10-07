@@ -5,7 +5,6 @@ using Sustainsys.Saml2.Metadata;
 using Sustainsys.Saml2.Saml2P;
 using Sustainsys.Saml2.Tokens;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.IO.Compression;
@@ -130,7 +129,7 @@ namespace Sustainsys.Saml2.WebSso
                 return TrustLevel.None;
             }
 
-            var idp = options.Notifications.GetIdentityProvider(new EntityId(issuer), new Dictionary<string, string>(), options);
+            var idp = options.TryGetIdentityProvider(new EntityId(issuer));
             if (idp == null)
             {
                 throw new InvalidSignatureException(string.Format(CultureInfo.InvariantCulture, "Cannot verify signature of message from unknown sender {0}.", issuer));
